@@ -2,25 +2,33 @@
   <h1>My To-Do List</h1>
 
   <form (submit)="addTodo()">
-    <input
-      type="text"
-      [(ngModel)]="newTask"
-      name="task"
-      placeholder="Add new task"
-      required
-    />
-    <button type="submit">Add</button>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>New Task</mat-label>
+      <input matInput [(ngModel)]="newTask" name="task" required />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      <mat-icon>add</mat-icon> Add
+    </button>
   </form>
 
-  <!-- Filter Buttons -->
   <div class="filters">
-    <button (click)="setFilter('all')" [class.active]="filter === 'all'">
+    <button
+      mat-button
+      (click)="setFilter('all')"
+      [class.active]="filter === 'all'"
+    >
       All
     </button>
-    <button (click)="setFilter('active')" [class.active]="filter === 'active'">
+    <button
+      mat-button
+      (click)="setFilter('active')"
+      [class.active]="filter === 'active'"
+    >
       Active
     </button>
     <button
+      mat-button
       (click)="setFilter('completed')"
       [class.active]="filter === 'completed'"
     >
@@ -28,16 +36,16 @@
     </button>
   </div>
 
-  <!-- Task List -->
-  <ul>
-    <li *ngFor="let todo of filteredTodos(); let i = index">
-      <input
-        type="checkbox"
-        [(ngModel)]="todo.completed"
-        (change)="saveTodos()"
-      />
-      <span [class.completed]="todo.completed">{{ todo.task }}</span>
-      <button (click)="removeTodo(i)">Remove</button>
-    </li>
-  </ul>
+  <mat-list>
+    <mat-list-item *ngFor="let todo of filteredTodos(); let i = index">
+      <mat-checkbox [(ngModel)]="todo.completed" (change)="saveTodos()">
+      </mat-checkbox>
+      <span class="task" [class.completed]="todo.completed">{{
+        todo.task
+      }}</span>
+      <button mat-icon-button color="warn" (click)="removeTodo(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
 </div>
