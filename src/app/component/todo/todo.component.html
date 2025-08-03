@@ -12,9 +12,30 @@
     <button type="submit">Add</button>
   </form>
 
+  <!-- Filter Buttons -->
+  <div class="filters">
+    <button (click)="setFilter('all')" [class.active]="filter === 'all'">
+      All
+    </button>
+    <button (click)="setFilter('active')" [class.active]="filter === 'active'">
+      Active
+    </button>
+    <button
+      (click)="setFilter('completed')"
+      [class.active]="filter === 'completed'"
+    >
+      Completed
+    </button>
+  </div>
+
+  <!-- Task List -->
   <ul>
-    <li *ngFor="let todo of todos; let i = index">
-      <input type="checkbox" [(ngModel)]="todo.completed" />
+    <li *ngFor="let todo of filteredTodos(); let i = index">
+      <input
+        type="checkbox"
+        [(ngModel)]="todo.completed"
+        (change)="saveTodos()"
+      />
       <span [class.completed]="todo.completed">{{ todo.task }}</span>
       <button (click)="removeTodo(i)">Remove</button>
     </li>
