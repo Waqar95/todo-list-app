@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 interface Todo {
   task: string;
@@ -25,6 +27,8 @@ interface Todo {
     MatIconModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatListModule,
+    MatDividerModule,
   ],
 })
 export class TodoComponent implements OnInit {

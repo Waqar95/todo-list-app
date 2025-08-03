@@ -37,15 +37,20 @@
   </div>
 
   <mat-list>
-    <mat-list-item *ngFor="let todo of filteredTodos(); let i = index">
-      <mat-checkbox [(ngModel)]="todo.completed" (change)="saveTodos()">
-      </mat-checkbox>
-      <span class="task" [class.completed]="todo.completed">{{
-        todo.task
-      }}</span>
-      <button mat-icon-button color="warn" (click)="removeTodo(i)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-list-item>
+    <ng-container *ngFor="let todo of filteredTodos(); let i = index">
+      <mat-list-item>
+        <mat-checkbox
+          [(ngModel)]="todo.completed"
+          (change)="saveTodos()"
+        ></mat-checkbox>
+        <span class="task" [class.completed]="todo.completed">{{
+          todo.task
+        }}</span>
+        <button mat-icon-button color="warn" (click)="removeTodo(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
   </mat-list>
 </div>
