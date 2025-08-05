@@ -77,6 +77,31 @@ export class TodoComponent implements OnInit {
     this.filter = value;
   }
 
+  isToday(dateStr?: string): boolean {
+    if (!dateStr) return false;
+    const today = new Date();
+    const date = new Date(dateStr);
+    return (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+    );
+  }
+
+  isUpcoming(dateStr?: string): boolean {
+    if (!dateStr) return false;
+    const today = new Date();
+    const date = new Date(dateStr);
+    return date > today && !this.isToday(dateStr);
+  }
+
+  getTodayTasks(): Todo[] {
+    return this.filteredTodos().filter((todo) => this.isToday(todo.dueDate));
+  }
+
+  getUpcomingTasks(): Todo[] {
+    return this.filteredTodos().filter((todo) => this.isUpcoming(todo.dueDate));
+  }
   filteredTodos(): Todo[] {
     switch (this.filter) {
       case 'active':

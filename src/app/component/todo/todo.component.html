@@ -1,6 +1,7 @@
 <div class="container">
   <h1>My Reminders</h1>
 
+  <!-- Task Form -->
   <form (submit)="addTodo()" class="form">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>New Task</mat-label>
@@ -10,9 +11,9 @@
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Category</mat-label>
       <mat-select [(ngModel)]="newCategory" name="category">
-        <mat-option *ngFor="let cat of categories" [value]="cat">{{
-          cat
-        }}</mat-option>
+        <mat-option *ngFor="let cat of categories" [value]="cat">
+          {{ cat }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -58,6 +59,88 @@
     </button>
   </div>
 
+  <!-- Today Section -->
+  <div *ngIf="getTodayTasks().length > 0">
+    <h3>Today</h3>
+    <mat-list>
+      <ng-container *ngFor="let todo of getTodayTasks(); let i = index">
+        <mat-list-item>
+          <mat-checkbox
+            [(ngModel)]="todo.completed"
+            (change)="saveTodos()"
+          ></mat-checkbox>
+
+          <span
+            class="task"
+            *ngIf="editingIndex !== i"
+            (click)="startEditing(i)"
+            [class.completed]="todo.completed"
+          >
+            {{ todo.task }}
+          </span>
+
+          <input
+            *ngIf="editingIndex === i"
+            [(ngModel)]="todo.task"
+            (blur)="finishEditing()"
+            (keydown.enter)="finishEditing()"
+            class="edit-input"
+          />
+
+          <div class="due-date" *ngIf="todo.dueDate">
+            <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+          </div>
+
+          <button mat-icon-button color="warn" (click)="removeTodo(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+  </div>
+
+  <!-- Upcoming Section -->
+  <div *ngIf="getUpcomingTasks().length > 0">
+    <h3>Upcoming</h3>
+    <mat-list>
+      <ng-container *ngFor="let todo of getUpcomingTasks(); let i = index">
+        <mat-list-item>
+          <mat-checkbox
+            [(ngModel)]="todo.completed"
+            (change)="saveTodos()"
+          ></mat-checkbox>
+
+          <span
+            class="task"
+            *ngIf="editingIndex !== i"
+            (click)="startEditing(i)"
+            [class.completed]="todo.completed"
+          >
+            {{ todo.task }}
+          </span>
+
+          <input
+            *ngIf="editingIndex === i"
+            [(ngModel)]="todo.task"
+            (blur)="finishEditing()"
+            (keydown.enter)="finishEditing()"
+            class="edit-input"
+          />
+
+          <div class="due-date" *ngIf="todo.dueDate">
+            <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+          </div>
+
+          <button mat-icon-button color="warn" (click)="removeTodo(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+  </div>
+
   <!-- Task List Grouped by Category -->
   <div *ngFor="let cat of categories">
     <h3>{{ cat }}</h3>
@@ -78,6 +161,7 @@
           >
             {{ todo.task }}
           </span>
+
           <input
             *ngIf="editingIndex === i"
             [(ngModel)]="todo.task"
