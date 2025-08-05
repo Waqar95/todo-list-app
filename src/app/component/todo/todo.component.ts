@@ -40,12 +40,22 @@ interface Todo {
   ],
 })
 export class TodoComponent implements OnInit {
+  // Inputs
   newTask = '';
   newCategory = 'Personal';
-  categories: string[] = ['Personal', 'Work', 'Groceries', 'Home'];
-  todos: Todo[] = [];
-  filter: 'all' | 'active' | 'completed' = 'all';
   newDueDate: Date | null = null;
+
+  // Static categories
+  categories: string[] = ['Personal', 'Work', 'Groceries', 'Home'];
+
+  // Tasks
+  todos: Todo[] = [];
+
+  // Filters
+  filter: 'all' | 'active' | 'completed' = 'all';
+
+  // Currently editing task
+  editingTodo: Todo | null = null;
 
   ngOnInit(): void {
     const saved = localStorage.getItem('todos');
@@ -77,6 +87,34 @@ export class TodoComponent implements OnInit {
     this.filter = value;
   }
 
+  startEditing(todo: Todo) {
+    this.editingTodo = todo;
+  }
+
+  finishEditing() {
+    this.editingTodo = null;
+    this.saveTodos();
+  }
+
+  saveTodos() {
+    localStorage.setItem('todos', JSON.stringify(this.todos));
+  }
+
+  filteredTodos(): Todo[] {
+    switch (this.filter) {
+      case 'active':
+        return this.todos.filter((todo) => !todo.completed);
+      case 'completed':
+        return this.todos.filter((todo) => todo.completed);
+      default:
+        return this.todos;
+    }
+  }
+
+  getTodosByCategory(category: string): Todo[] {
+    return this.filteredTodos().filter((todo) => todo.category === category);
+  }
+
   isToday(dateStr?: string): boolean {
     if (!dateStr) return false;
     const today = new Date();
@@ -101,32 +139,5 @@ export class TodoComponent implements OnInit {
 
   getUpcomingTasks(): Todo[] {
     return this.filteredTodos().filter((todo) => this.isUpcoming(todo.dueDate));
-  }
-  filteredTodos(): Todo[] {
-    switch (this.filter) {
-      case 'active':
-        return this.todos.filter((todo) => !todo.completed);
-      case 'completed':
-        return this.todos.filter((todo) => todo.completed);
-      default:
-        return this.todos;
-    }
-  }
-  editingIndex: number | null = null;
-
-  startEditing(index: number) {
-    this.editingIndex = index;
-  }
-
-  finishEditing() {
-    this.editingIndex = null;
-    this.saveTodos();
-  }
-  getTodosByCategory(category: string): Todo[] {
-    return this.filteredTodos().filter((todo) => todo.category === category);
-  }
-
-  saveTodos() {
-    localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 }

@@ -72,15 +72,15 @@
 
           <span
             class="task"
-            *ngIf="editingIndex !== i"
-            (click)="startEditing(i)"
+            *ngIf="editingTodo !== todo"
+            (click)="startEditing(todo)"
             [class.completed]="todo.completed"
           >
             {{ todo.task }}
           </span>
 
           <input
-            *ngIf="editingIndex === i"
+            *ngIf="editingTodo === todo"
             [(ngModel)]="todo.task"
             (blur)="finishEditing()"
             (keydown.enter)="finishEditing()"
@@ -113,15 +113,15 @@
 
           <span
             class="task"
-            *ngIf="editingIndex !== i"
-            (click)="startEditing(i)"
+            *ngIf="editingTodo !== todo"
+            (click)="startEditing(todo)"
             [class.completed]="todo.completed"
           >
             {{ todo.task }}
           </span>
 
           <input
-            *ngIf="editingIndex === i"
+            *ngIf="editingTodo === todo"
             [(ngModel)]="todo.task"
             (blur)="finishEditing()"
             (keydown.enter)="finishEditing()"
@@ -141,7 +141,7 @@
     </mat-list>
   </div>
 
-  <!-- Task List Grouped by Category -->
+  <!-- Tasks Grouped by Category -->
   <div *ngFor="let cat of categories">
     <h3>{{ cat }}</h3>
     <mat-list>
@@ -152,30 +152,27 @@
             (change)="saveTodos()"
           ></mat-checkbox>
 
-          <!-- Editable Task Title -->
           <span
             class="task"
-            *ngIf="editingIndex !== i"
-            (click)="startEditing(i)"
+            *ngIf="editingTodo !== todo"
+            (click)="startEditing(todo)"
             [class.completed]="todo.completed"
           >
             {{ todo.task }}
           </span>
 
           <input
-            *ngIf="editingIndex === i"
+            *ngIf="editingTodo === todo"
             [(ngModel)]="todo.task"
             (blur)="finishEditing()"
             (keydown.enter)="finishEditing()"
             class="edit-input"
           />
 
-          <!-- Due Date -->
           <div class="due-date" *ngIf="todo.dueDate">
             <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
           </div>
 
-          <!-- Delete -->
           <button mat-icon-button color="warn" (click)="removeTodo(i)">
             <mat-icon>delete</mat-icon>
           </button>
