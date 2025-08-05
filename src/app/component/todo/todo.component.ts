@@ -12,6 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 interface Todo {
   task: string;
   completed: boolean;
+  category: string;
 }
 
 @Component({
@@ -33,6 +34,8 @@ interface Todo {
 })
 export class TodoComponent implements OnInit {
   newTask = '';
+  newCategory = 'Personal';
+  categories: string[] = ['Personal', 'Work', 'Groceries', 'Home'];
   todos: Todo[] = [];
   filter: 'all' | 'active' | 'completed' = 'all';
 
@@ -45,7 +48,11 @@ export class TodoComponent implements OnInit {
 
   addTodo() {
     if (this.newTask.trim()) {
-      this.todos.push({ task: this.newTask.trim(), completed: false });
+      this.todos.push({
+        task: this.newTask.trim(),
+        completed: false,
+        category: this.newCategory,
+      });
       this.newTask = '';
       this.saveTodos();
     }

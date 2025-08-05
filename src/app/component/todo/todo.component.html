@@ -7,6 +7,15 @@
       <input matInput [(ngModel)]="newTask" name="task" required />
     </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="newCategory" name="category">
+        <mat-option *ngFor="let cat of categories" [value]="cat">{{
+          cat
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <button mat-raised-button color="primary" type="submit">
       <mat-icon>add</mat-icon> Add
     </button>
@@ -36,34 +45,38 @@
     </button>
   </div>
 
-  <mat-list>
-    <ng-container *ngFor="let todo of filteredTodos(); let i = index">
-      <mat-list-item>
-        <mat-checkbox
-          [(ngModel)]="todo.completed"
-          (change)="saveTodos()"
-        ></mat-checkbox>
-        <span
-          class="task"
-          *ngIf="editingIndex !== i"
-          (click)="startEditing(i)"
-          [class.completed]="todo.completed"
-        >
-          {{ todo.task }}
-        </span>
-
-        <input
-          *ngIf="editingIndex === i"
-          [(ngModel)]="todo.task"
-          (blur)="finishEditing()"
-          (keydown.enter)="finishEditing()"
-          class="edit-input"
-        />
-        <button mat-icon-button color="warn" (click)="removeTodo(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    </ng-container>
-  </mat-list>
+  <div *ngFor="let cat of categories">
+    <h3>{{ cat }}</h3>
+    <mat-list>
+      <ng-container
+        *ngFor="let todo of filteredTodos().filter(t => t.category === cat); let i = index"
+      >
+        <mat-list-item>
+          <mat-checkbox
+            [(ngModel)]="todo.completed"
+            (change)="saveTodos()"
+          ></mat-checkbox>
+          <span
+            class="task"
+            *ngIf="editingIndex !== i"
+            (click)="startEditing(i)"
+            [class.completed]="todo.completed"
+          >
+            {{ todo.task }}
+          </span>
+          <input
+            *ngIf="editingIndex === i"
+            [(ngModel)]="todo.task"
+            (blur)="finishEditing()"
+            (keydown.enter)="finishEditing()"
+            class="edit-input"
+          />
+          <button mat-icon-button color="warn" (click)="removeTodo(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+  </div>
 </div>
