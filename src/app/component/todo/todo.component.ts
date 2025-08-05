@@ -9,11 +9,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 interface Todo {
   task: string;
   completed: boolean;
   category: string;
+  dueDate?: string;
 }
 
 @Component({
@@ -32,6 +35,8 @@ interface Todo {
     MatListModule,
     MatDividerModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 })
 export class TodoComponent implements OnInit {
@@ -40,6 +45,7 @@ export class TodoComponent implements OnInit {
   categories: string[] = ['Personal', 'Work', 'Groceries', 'Home'];
   todos: Todo[] = [];
   filter: 'all' | 'active' | 'completed' = 'all';
+  newDueDate: Date | null = null;
 
   ngOnInit(): void {
     const saved = localStorage.getItem('todos');
@@ -54,8 +60,10 @@ export class TodoComponent implements OnInit {
         task: this.newTask.trim(),
         completed: false,
         category: this.newCategory,
+        dueDate: this.newDueDate ? this.newDueDate.toISOString() : undefined,
       });
       this.newTask = '';
+      this.newDueDate = null;
       this.saveTodos();
     }
   }

@@ -1,13 +1,13 @@
 <div class="container">
-  <h1>My To-Do List</h1>
+  <h1>My Reminders</h1>
 
-  <form (submit)="addTodo()">
+  <form (submit)="addTodo()" class="form">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>New Task</mat-label>
       <input matInput [(ngModel)]="newTask" name="task" required />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Category</mat-label>
       <mat-select [(ngModel)]="newCategory" name="category">
         <mat-option *ngFor="let cat of categories" [value]="cat">{{
@@ -16,11 +16,24 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Due Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="newDueDate"
+        name="dueDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
     <button mat-raised-button color="primary" type="submit">
       <mat-icon>add</mat-icon> Add
     </button>
   </form>
 
+  <!-- Filters -->
   <div class="filters">
     <button
       mat-button
@@ -45,6 +58,7 @@
     </button>
   </div>
 
+  <!-- Task List Grouped by Category -->
   <div *ngFor="let cat of categories">
     <h3>{{ cat }}</h3>
     <mat-list>
@@ -54,6 +68,8 @@
             [(ngModel)]="todo.completed"
             (change)="saveTodos()"
           ></mat-checkbox>
+
+          <!-- Editable Task Title -->
           <span
             class="task"
             *ngIf="editingIndex !== i"
@@ -69,6 +85,13 @@
             (keydown.enter)="finishEditing()"
             class="edit-input"
           />
+
+          <!-- Due Date -->
+          <div class="due-date" *ngIf="todo.dueDate">
+            <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+          </div>
+
+          <!-- Delete -->
           <button mat-icon-button color="warn" (click)="removeTodo(i)">
             <mat-icon>delete</mat-icon>
           </button>
