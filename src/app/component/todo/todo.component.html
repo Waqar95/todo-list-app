@@ -43,9 +43,22 @@
           [(ngModel)]="todo.completed"
           (change)="saveTodos()"
         ></mat-checkbox>
-        <span class="task" [class.completed]="todo.completed">{{
-          todo.task
-        }}</span>
+        <span
+          class="task"
+          *ngIf="editingIndex !== i"
+          (click)="startEditing(i)"
+          [class.completed]="todo.completed"
+        >
+          {{ todo.task }}
+        </span>
+
+        <input
+          *ngIf="editingIndex === i"
+          [(ngModel)]="todo.task"
+          (blur)="finishEditing()"
+          (keydown.enter)="finishEditing()"
+          class="edit-input"
+        />
         <button mat-icon-button color="warn" (click)="removeTodo(i)">
           <mat-icon>delete</mat-icon>
         </button>

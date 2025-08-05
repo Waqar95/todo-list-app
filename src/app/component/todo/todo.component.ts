@@ -70,6 +70,16 @@ export class TodoComponent implements OnInit {
         return this.todos;
     }
   }
+  editingIndex: number | null = null;
+
+  startEditing(index: number) {
+    this.editingIndex = index;
+  }
+
+  finishEditing() {
+    this.editingIndex = null;
+    this.saveTodos();
+  }
 
   saveTodos() {
     localStorage.setItem('todos', JSON.stringify(this.todos));
