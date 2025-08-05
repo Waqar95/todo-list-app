@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
 
 interface Todo {
   task: string;
@@ -30,6 +31,7 @@ interface Todo {
     MatCheckboxModule,
     MatListModule,
     MatDividerModule,
+    MatSelectModule,
   ],
 })
 export class TodoComponent implements OnInit {
@@ -86,6 +88,9 @@ export class TodoComponent implements OnInit {
   finishEditing() {
     this.editingIndex = null;
     this.saveTodos();
+  }
+  getTodosByCategory(category: string): Todo[] {
+    return this.filteredTodos().filter((todo) => todo.category === category);
   }
 
   saveTodos() {

@@ -48,9 +48,7 @@
   <div *ngFor="let cat of categories">
     <h3>{{ cat }}</h3>
     <mat-list>
-      <ng-container
-        *ngFor="let todo of filteredTodos().filter(t => t.category === cat); let i = index"
-      >
+      <ng-container *ngFor="let todo of getTodosByCategory(cat); let i = index">
         <mat-list-item>
           <mat-checkbox
             [(ngModel)]="todo.completed"
