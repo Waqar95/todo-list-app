@@ -72,15 +72,15 @@
 
           <span
             class="task"
-            *ngIf="editingTodo !== todo"
-            (click)="startEditing(todo)"
+            *ngIf="editingId !== todo.id"
+            (click)="startEditing(todo.id)"
             [class.completed]="todo.completed"
           >
             {{ todo.task }}
           </span>
 
           <input
-            *ngIf="editingTodo === todo"
+            *ngIf="editingId === todo.id"
             [(ngModel)]="todo.task"
             (blur)="finishEditing()"
             (keydown.enter)="finishEditing()"
@@ -113,15 +113,15 @@
 
           <span
             class="task"
-            *ngIf="editingTodo !== todo"
-            (click)="startEditing(todo)"
+            *ngIf="editingId !== todo.id"
+            (click)="startEditing(todo.id)"
             [class.completed]="todo.completed"
           >
             {{ todo.task }}
           </span>
 
           <input
-            *ngIf="editingTodo === todo"
+            *ngIf="editingId === todo.id"
             [(ngModel)]="todo.task"
             (blur)="finishEditing()"
             (keydown.enter)="finishEditing()"
@@ -154,15 +154,15 @@
 
           <span
             class="task"
-            *ngIf="editingTodo !== todo"
-            (click)="startEditing(todo)"
+            *ngIf="editingId !== todo.id"
+            (click)="startEditing(todo.id)"
             [class.completed]="todo.completed"
           >
             {{ todo.task }}
           </span>
 
           <input
-            *ngIf="editingTodo === todo"
+            *ngIf="editingId === todo.id"
             [(ngModel)]="todo.task"
             (blur)="finishEditing()"
             (keydown.enter)="finishEditing()"

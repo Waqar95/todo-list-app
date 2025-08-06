@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 interface Todo {
+  id: number;
   task: string;
   completed: boolean;
   category: string;
@@ -55,7 +56,7 @@ export class TodoComponent implements OnInit {
   filter: 'all' | 'active' | 'completed' = 'all';
 
   // Currently editing task
-  editingTodo: Todo | null = null;
+  editingId: number | null = null;
 
   ngOnInit(): void {
     const saved = localStorage.getItem('todos');
@@ -66,12 +67,14 @@ export class TodoComponent implements OnInit {
 
   addTodo() {
     if (this.newTask.trim()) {
-      this.todos.push({
+      const newTodo: Todo = {
+        id: Date.now(),
         task: this.newTask.trim(),
         completed: false,
         category: this.newCategory,
         dueDate: this.newDueDate ? this.newDueDate.toISOString() : undefined,
-      });
+      };
+      this.todos.push(newTodo);
       this.newTask = '';
       this.newDueDate = null;
       this.saveTodos();
@@ -87,12 +90,12 @@ export class TodoComponent implements OnInit {
     this.filter = value;
   }
 
-  startEditing(todo: Todo) {
-    this.editingTodo = todo;
+  startEditing(todoId: number) {
+    this.editingId = todoId;
   }
 
   finishEditing() {
-    this.editingTodo = null;
+    this.editingId = null;
     this.saveTodos();
   }
 
