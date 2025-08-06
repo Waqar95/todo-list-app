@@ -69,8 +69,16 @@ mat-list {
 
 mat-list-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 12px;
+  box-sizing: border-box;
+
+  .todo-row {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+  }
 
   .task {
     flex: 1;
@@ -78,6 +86,8 @@ mat-list-item {
     padding-left: 8px;
     color: #222;
     cursor: pointer;
+    display: block;
+    min-width: 1px;
     word-break: break-word;
     white-space: normal;
 

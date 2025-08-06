@@ -65,35 +65,39 @@
     <mat-list>
       <ng-container *ngFor="let todo of getTodayTasks(); let i = index">
         <mat-list-item>
-          <mat-checkbox
-            [(ngModel)]="todo.completed"
-            (change)="saveTodos()"
-          ></mat-checkbox>
+          <div class="todo-row">
+            <mat-checkbox
+              [(ngModel)]="todo.completed"
+              (change)="saveTodos()"
+            ></mat-checkbox>
 
-          <span
-            class="task"
-            *ngIf="editingId !== todo.id"
-            (click)="startEditing(todo.id)"
-            [class.completed]="todo.completed"
-          >
-            {{ todo.task }}
-          </span>
+            <div class="todo-main">
+              <span
+                class="task"
+                *ngIf="editingId !== todo.id"
+                (click)="startEditing(todo.id)"
+                [class.completed]="todo.completed"
+              >
+                {{ todo.task }}
+              </span>
 
-          <input
-            *ngIf="editingId === todo.id"
-            [(ngModel)]="todo.task"
-            (blur)="finishEditing()"
-            (keydown.enter)="finishEditing()"
-            class="edit-input"
-          />
+              <input
+                *ngIf="editingId === todo.id"
+                [(ngModel)]="todo.task"
+                (blur)="finishEditing()"
+                (keydown.enter)="finishEditing()"
+                class="edit-input"
+              />
 
-          <div class="due-date" *ngIf="todo.dueDate">
-            <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+              <div class="due-date" *ngIf="todo.dueDate">
+                <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+              </div>
+            </div>
+
+            <button mat-icon-button color="warn" (click)="removeTodo(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
-
-          <button mat-icon-button color="warn" (click)="removeTodo(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
@@ -106,35 +110,39 @@
     <mat-list>
       <ng-container *ngFor="let todo of getUpcomingTasks(); let i = index">
         <mat-list-item>
-          <mat-checkbox
-            [(ngModel)]="todo.completed"
-            (change)="saveTodos()"
-          ></mat-checkbox>
+          <div class="todo-row">
+            <mat-checkbox
+              [(ngModel)]="todo.completed"
+              (change)="saveTodos()"
+            ></mat-checkbox>
 
-          <span
-            class="task"
-            *ngIf="editingId !== todo.id"
-            (click)="startEditing(todo.id)"
-            [class.completed]="todo.completed"
-          >
-            {{ todo.task }}
-          </span>
+            <div class="todo-main">
+              <span
+                class="task"
+                *ngIf="editingId !== todo.id"
+                (click)="startEditing(todo.id)"
+                [class.completed]="todo.completed"
+              >
+                {{ todo.task }}
+              </span>
 
-          <input
-            *ngIf="editingId === todo.id"
-            [(ngModel)]="todo.task"
-            (blur)="finishEditing()"
-            (keydown.enter)="finishEditing()"
-            class="edit-input"
-          />
+              <input
+                *ngIf="editingId === todo.id"
+                [(ngModel)]="todo.task"
+                (blur)="finishEditing()"
+                (keydown.enter)="finishEditing()"
+                class="edit-input"
+              />
 
-          <div class="due-date" *ngIf="todo.dueDate">
-            <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+              <div class="due-date" *ngIf="todo.dueDate">
+                <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+              </div>
+            </div>
+
+            <button mat-icon-button color="warn" (click)="removeTodo(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
-
-          <button mat-icon-button color="warn" (click)="removeTodo(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
@@ -147,35 +155,39 @@
     <mat-list>
       <ng-container *ngFor="let todo of getTodosByCategory(cat); let i = index">
         <mat-list-item>
-          <mat-checkbox
-            [(ngModel)]="todo.completed"
-            (change)="saveTodos()"
-          ></mat-checkbox>
+          <div class="todo-row">
+            <mat-checkbox
+              [(ngModel)]="todo.completed"
+              (change)="saveTodos()"
+            ></mat-checkbox>
 
-          <span
-            class="task"
-            *ngIf="editingId !== todo.id"
-            (click)="startEditing(todo.id)"
-            [class.completed]="todo.completed"
-          >
-            {{ todo.task }}
-          </span>
+            <div class="todo-main">
+              <span
+                class="task"
+                *ngIf="editingId !== todo.id"
+                (click)="startEditing(todo.id)"
+                [class.completed]="todo.completed"
+              >
+                {{ todo.task }}
+              </span>
 
-          <input
-            *ngIf="editingId === todo.id"
-            [(ngModel)]="todo.task"
-            (blur)="finishEditing()"
-            (keydown.enter)="finishEditing()"
-            class="edit-input"
-          />
+              <input
+                *ngIf="editingId === todo.id"
+                [(ngModel)]="todo.task"
+                (blur)="finishEditing()"
+                (keydown.enter)="finishEditing()"
+                class="edit-input"
+              />
 
-          <div class="due-date" *ngIf="todo.dueDate">
-            <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+              <div class="due-date" *ngIf="todo.dueDate">
+                <small>Due: {{ todo.dueDate | date : "mediumDate" }}</small>
+              </div>
+            </div>
+
+            <button mat-icon-button color="warn" (click)="removeTodo(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
-
-          <button mat-icon-button color="warn" (click)="removeTodo(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
